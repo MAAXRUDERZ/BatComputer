@@ -4,6 +4,10 @@ BatComputer is a terminal-based system dashboard inspired by the many incarnatio
 
 Unlike traditional monitoring tools, BatComputer aims to combine real-time system monitoring with themed interfaces that capture the visual identity of different eras of Batman.
 
+## Screenshot
+
+![BatComputer v0.1](screenshots/v0.1-dashboard.png)
+
 ## Current Features
 
 * Real-time CPU monitoring
