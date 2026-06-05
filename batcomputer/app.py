@@ -12,6 +12,8 @@ from batcomputer.pages.settings import SettingsPage
 
 class BatComputer(App):
 
+    current_page = "Dashboard"
+    
     CSS_PATH = "batcomputer.tcss"
 
     BINDINGS = [
@@ -40,6 +42,43 @@ class BatComputer(App):
             DashboardPage(),
             id="page-container"
         )
+        
+        yield Static(
+            "",
+            id="footer"
+        )
+
+    def update_footer(self):
+
+        footer = self.query_one("#footer")
+
+        pages = [
+            ("Dashboard", "F1"),
+            ("Homepage", "F2"),
+            ("Docker", "F3"),
+            ("Network", "F4"),
+            ("Archive", "F5"),
+            ("Settings", "F6"),
+        ]
+
+        text = ""
+
+        for page, key in pages:
+
+            if page == self.current_page:
+                text += (
+                    f"[bold #F7C600]\\[{key}] {page}[/]  "
+                )
+            else:
+                text += (
+                    f"[white]\\[{key}] {page}[/]  "
+                )
+
+        footer.update(text)
+
+
+    def on_mount(self):
+        self.update_footer()
 
     def switch_page(self, page):
 
@@ -50,35 +89,63 @@ class BatComputer(App):
         container.mount(page)
 
     def action_show_dashboard(self):
-
+        self.bell()
+    
+        self.current_page = "Dashboard"    
+        
         self.switch_page(
             DashboardPage()
         )
+        self.update_footer()
 
     def action_show_homepage(self):
-
+        self.bell()
+    
+        self.current_page = "Homepage"
+        
         self.switch_page(
             HomepagePage()
         )
+        self.update_footer()
+        
     def action_show_docker(self):
+        self.bell()
+        
+        self.current_page = "Docker"
+    
         self.switch_page(
             DockerPage()
         )
+        self.update_footer()
         
     def action_show_network(self):
+        self.bell()
+    
+        self.current_page = "Network"
+    
         self.switch_page(
             NetworkPage()
         )
+        self.update_footer()
     
     def action_show_archive(self):
+        self.bell()
+    
+        self.current_page = "Archive"
+    
         self.switch_page(
             ArchivePage()
         )
+        self.update_footer()
 
     def action_show_settings(self):
+        self.bell()
+    
+        self.current_page = "Settings"
         self.switch_page(
             SettingsPage()
         )
+        self.update_footer()
         
 if __name__ == "__main__":
     BatComputer().run()
