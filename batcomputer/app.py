@@ -13,6 +13,39 @@ from batcomputer.pages.settings import SettingsPage
 class BatComputer(App):
 
     current_page = "Dashboard"
+
+    THEMES = {
+        "Dashboard": {
+            "primary": "#FFD700",
+            "accent": "#F7C600",
+            "name": "Adam West",
+        },
+        "Homepage": {
+            "primary": "#90A4AE",
+            "accent": "#00BCD4",
+            "name": "BTAS",
+        },
+        "Docker": {
+            "primary": "#B71C1C",
+            "accent": "#FF1744",
+            "name": "Batman Beyond",
+        },
+        "Network": {
+            "primary": "#2E7D32",
+            "accent": "#00E676",
+            "name": "WayneTech",
+        },
+        "Archive": {
+            "primary": "#6A1B9A",
+            "accent": "#FF1744",
+            "name": "Batman Who Laughs",
+        },
+        "Settings": {
+            "primary": "#78909C",
+            "accent": "#ECEFF1",
+            "name": "Arkham",
+        },
+    }
     
     CSS_PATH = "batcomputer.tcss"
 
@@ -35,7 +68,8 @@ class BatComputer(App):
 ██╔══██╗██╔══██║   ██║   ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║   ██║   ██║   ██╔══╝  ██╔══██╗
 ██████╔╝██║  ██║   ██║   ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ╚██████╔╝   ██║   ███████╗██║  ██║
 ╚═════╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝      ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
-[/bold #FFD700]"""
+[/bold #FFD700]""",
+    id="logo"
         )
 
         yield Container(
@@ -65,9 +99,11 @@ class BatComputer(App):
 
         for page, key in pages:
 
+            theme_color = self.THEMES[self.current_page]["accent"]
+
             if page == self.current_page:
                 text += (
-                    f"[bold #F7C600]\\[{key}] {page}[/]  "
+                    f"[bold {theme_color}]\\[{key}] {page}[/]  "
                 )
             else:
                 text += (
@@ -77,8 +113,26 @@ class BatComputer(App):
         footer.update(text)
 
 
+    def update_logo(self):
+
+        logo = self.query_one("#logo")
+
+        color = self.THEMES[self.current_page]["primary"]
+
+        logo.update(
+    f"""[bold {color}]
+    ██████╗  █████╗ ████████╗ ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗   ██╗████████╗███████╗██████╗
+    ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║   ██║╚══██╔══╝██╔════╝██╔══██╗
+    ██████╔╝███████║   ██║   ██║     ██║   ██║██╔████╔██║██████╔╝██║   ██║   ██║   █████╗  ██████╔╝
+    ██╔══██╗██╔══██║   ██║   ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║   ██║   ██║   ██╔══╝  ██╔══██╗
+    ██████╔╝██║  ██║   ██║   ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ╚██████╔╝   ██║   ███████╗██║  ██║
+    ╚═════╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝      ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
+    [/bold {color}]"""
+        )
+
     def on_mount(self):
         self.update_footer()
+        self.update_logo()
 
     def switch_page(self, page):
 
@@ -97,6 +151,7 @@ class BatComputer(App):
             DashboardPage()
         )
         self.update_footer()
+        self.update_logo()
 
     def action_show_homepage(self):
         self.bell()
@@ -107,6 +162,7 @@ class BatComputer(App):
             HomepagePage()
         )
         self.update_footer()
+        self.update_logo()
         
     def action_show_docker(self):
         self.bell()
@@ -117,6 +173,7 @@ class BatComputer(App):
             DockerPage()
         )
         self.update_footer()
+        self.update_logo()
         
     def action_show_network(self):
         self.bell()
@@ -127,6 +184,7 @@ class BatComputer(App):
             NetworkPage()
         )
         self.update_footer()
+        self.update_logo()
     
     def action_show_archive(self):
         self.bell()
@@ -137,6 +195,7 @@ class BatComputer(App):
             ArchivePage()
         )
         self.update_footer()
+        self.update_logo()
 
     def action_show_settings(self):
         self.bell()
@@ -146,6 +205,7 @@ class BatComputer(App):
             SettingsPage()
         )
         self.update_footer()
+        self.update_logo()
         
 if __name__ == "__main__":
     BatComputer().run()

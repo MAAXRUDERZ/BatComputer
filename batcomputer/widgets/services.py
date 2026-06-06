@@ -33,9 +33,12 @@ class Services(Static):
 
         if not containers:
             text += "[yellow]No containers found[/]"
+
         else:
 
-            for container in containers:
+            rows = ["", "", ""]
+
+            for i, container in enumerate(containers):
 
                 name, status = container.split("|", 1)
 
@@ -44,6 +47,10 @@ class Services(Static):
                 else:
                     icon = "[red]●[/]"
 
-                text += f"{icon} {name}\n"
+                row = i % 3
+
+                rows[row] += f"{icon} {name:<11}"
+
+            text += "\n".join(rows)
 
         self.update(text)

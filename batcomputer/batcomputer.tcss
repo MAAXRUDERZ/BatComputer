@@ -25,3 +25,14 @@ Horizontal {
     padding: 0 1;
     height: 3;
 }
+#homepage-footer {
+    height: auto;
+}
+#services-container {
+    border: none;
+    padding: 1;
+    height: 21;
+}
+.service-column {
+    width: 44;
+}
