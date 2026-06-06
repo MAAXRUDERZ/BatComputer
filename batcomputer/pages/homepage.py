@@ -2,6 +2,8 @@ from textual.widget import Widget
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 from textual.binding import Binding
+import subprocess
+import webbrowser
 
 from batcomputer.widgets.service_card import ServiceCard
 from batcomputer.services.docker import get_containers
@@ -17,6 +19,7 @@ class HomepagePage(Widget):
         Binding("down", "move_down", "Down"),
         Binding("left", "move_left", "Left"),
         Binding("right", "move_right", "Right"),
+        Binding("enter", "launch_service", "Launch")
     ]
 
     def on_mount(self):
@@ -102,3 +105,33 @@ AUTHORIZED ACCESS ONLY
             self.selected_index += 4
 
         self.update_selection()
+        
+        
+    def action_launch_service(self):
+
+        container = self.containers[self.selected_index]
+
+        try:
+
+            output = subprocess.check_output(
+                [
+                    "docker",
+                    "port",
+                    container["name"]
+                ]
+            ).decode().splitlines()
+
+            if not output:
+                return
+
+            first_mapping = output[0]
+
+            port = first_mapping.split(":")[-1].strip()
+
+            url = f"http://localhost:{port}"
+
+            webbrowser.open(url)
+
+        except Exception as e:
+
+            print(e)    

@@ -3,15 +3,21 @@ import psutil
 
 
 class Stats(Static):
+
     def on_mount(self):
+
+        self.update_stats()
         self.set_interval(1, self.update_stats)
 
     def make_bar(self, percent, width=15):
+
         filled = int(percent / 100 * width)
         empty = width - filled
+
         return "█" * filled + "░" * empty
 
     def update_stats(self):
+
         total_cpu = psutil.cpu_percent()
         cores = psutil.cpu_percent(percpu=True)
 
@@ -41,11 +47,11 @@ class Stats(Static):
                 f"[white]{usage:5.1f}%[/]\n"
             )
 
-        ram_used = ram.used / (1024**3)
-        ram_total = ram.total / (1024**3)
+        ram_used = ram.used / (1024 ** 3)
+        ram_total = ram.total / (1024 ** 3)
 
-        disk_used = disk.used / (1024**3)
-        disk_total = disk.total / (1024**3)
+        disk_used = disk.used / (1024 ** 3)
+        disk_total = disk.total / (1024 ** 3)
 
         output += "\n"
 

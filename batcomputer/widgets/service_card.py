@@ -18,7 +18,6 @@ class ServiceCard(Static):
     def on_mount(self):
         self.refresh_card()
 
-
     def refresh_card(self):
 
         status_color = (
@@ -28,13 +27,19 @@ class ServiceCard(Static):
         )
 
         if self.selected:
-            selector = "[bold #F7C600]►[/]"
-        else:
-            selector = " "
 
-        self.update(
-    f"""╔════════════════════════════════════╗
- ║  {selector} {self.service_name[:29]:<29}║
- ║  STATUS : [{status_color}]● {self.service_status.upper()}[/]              ║
+            self.update(
+f"""[#F7C600]╔════════════════════════════════════╗[/]
+ [#F7C600]║[/] [bold #F7C600]► {self.service_name[:29]:<29}[/] [#F7C600] ║[/]
+ [#F7C600]║[/] STATUS : [{status_color}]● {self.service_status.upper()}[/]               [#F7C600]║[/]
+[#F7C600]╚════════════════════════════════════╝[/]"""
+            )
+
+        else:
+
+            self.update(
+f"""╔════════════════════════════════════╗
+ ║   {self.service_name[:30]:<30} ║
+ ║ STATUS : [{status_color}]● {self.service_status.upper()}[/]               ║
 ╚════════════════════════════════════╝"""
-        )
+            )

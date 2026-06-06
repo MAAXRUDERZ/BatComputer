@@ -25,14 +25,77 @@ Horizontal {
     padding: 0 1;
     height: 3;
 }
+
 #homepage-footer {
     height: auto;
 }
+
 #services-container {
     border: none;
     padding: 1;
     height: 21;
 }
+
 .service-column {
     width: 44;
+}
+
+
+/* ==========================
+   DOCKER PAGE
+   ========================== */
+
+DockerContainerList {
+    width: 28;
+}
+
+DockerHealth,
+DockerPorts {
+    width: 1fr;
+    height: 12;
+}
+
+DockerCPU,
+DockerMemory {
+    width: 1fr;
+    height: 7;
+}
+
+DockerNetwork,
+DockerIO {
+    width: 1fr;
+    height: 5;
+}
+
+DockerProcesses {
+    height: 5;
+}
+
+DockerLogs {
+    height: 8;
+}
+
+DockerActions {
+    height: 3;
+}
+DockerCPUGraph {
+    border: round #F7C600;
+    padding: 1;
+    width: 1fr;
+    height: 8;
+}
+DockerContainerList,
+DockerHealth,
+DockerCPU,
+DockerMemory,
+DockerNetwork,
+DockerIO,
+DockerProcesses,
+DockerPorts,
+DockerLogs,
+DockerActions {
+    border: round #F7C600;
+    padding: 1;
+    margin-right: 1;
+    margin-bottom: 1;
 }

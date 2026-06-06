@@ -7,16 +7,23 @@ import subprocess
 
 
 class SystemInfo(Static):
+
     def on_mount(self):
+
         self.boot_time = psutil.boot_time()
+
+        self.update_info()
         self.set_interval(1, self.update_info)
 
     def make_bar(self, percent, width=20):
+
         filled = int(percent / 100 * width)
         empty = width - filled
+
         return "█" * filled + "░" * empty
 
     def get_uptime(self):
+
         uptime_seconds = int(time.time() - self.boot_time)
 
         days = uptime_seconds // 86400
@@ -26,10 +33,13 @@ class SystemInfo(Static):
         return f"{days}d {hours}h {minutes}m"
 
     def get_cpu_temp(self):
+
         try:
+
             temps = psutil.sensors_temperatures()
 
             for sensor_name in temps:
+
                 if temps[sensor_name]:
                     return temps[sensor_name][0].current
 
@@ -39,7 +49,9 @@ class SystemInfo(Static):
             return None
 
     def get_gpu_info(self):
+
         try:
+
             output = subprocess.check_output(
                 [
                     "nvidia-smi",
@@ -61,6 +73,7 @@ class SystemInfo(Static):
             return None
 
     def temp_color(self, temp):
+
         if temp is None:
             return "#888888"
 
@@ -74,15 +87,19 @@ class SystemInfo(Static):
             return "#FF3333"
 
     def update_info(self):
+
         hostname = socket.gethostname()
 
         cpu_temp = self.get_cpu_temp()
 
         if cpu_temp is None:
+
             cpu_temp_text = "N/A"
             cpu_temp_bar = self.make_bar(0)
             cpu_temp_color = "#888888"
+
         else:
+
             cpu_temp_text = f"{cpu_temp:.1f}°C"
             cpu_temp_bar = self.make_bar(cpu_temp)
             cpu_temp_color = self.temp_color(cpu_temp)
@@ -90,6 +107,7 @@ class SystemInfo(Static):
         gpu = self.get_gpu_info()
 
         if gpu:
+
             gpu_temp_bar = self.make_bar(gpu["temp"])
             gpu_temp_color = self.temp_color(gpu["temp"])
 
@@ -110,6 +128,7 @@ class SystemInfo(Static):
             )
 
         else:
+
             gpu_temp_bar = self.make_bar(0)
             gpu_util_bar = self.make_bar(0)
             vram_bar = self.make_bar(0)
