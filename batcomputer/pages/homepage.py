@@ -161,8 +161,7 @@ AUTHORIZED ACCESS ONLY
         self.update_selection()
 
     def action_launch_service(self):
-    
-        raise Exception("ENTER WORKS")
+
 
         container = (
             self.containers[
