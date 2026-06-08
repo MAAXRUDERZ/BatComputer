@@ -13,6 +13,14 @@ from batcomputer.services.docker import get_containers
 
 class UrlPopup(ModalScreen):
 
+    BINDINGS = [
+        Binding(
+            "escape",
+            "close_popup",
+            "Close"
+        )
+    ]
+
     def __init__(self, url):
 
         super().__init__()
@@ -33,6 +41,10 @@ Press ESC to close
 [/]
 """
         )
+
+    def action_close_popup(self):
+
+        self.dismiss()
 
 
 class HomepagePage(Widget):
