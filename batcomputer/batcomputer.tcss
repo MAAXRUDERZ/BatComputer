@@ -50,7 +50,7 @@ Horizontal {
 }
 
 DockerContainerList {
-    height: 12;
+    height: 13;
 }
 
 DockerSystem {
