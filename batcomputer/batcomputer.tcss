@@ -45,56 +45,43 @@ Horizontal {
    DOCKER PAGE
    ========================== */
 
-DockerContainerList {
+.docker-left {
     width: 28;
+}
+
+DockerContainerList {
+    height: 12;
+}
+
+DockerSystem {
+    border: round #F7C600;
+    padding: 1;
+    height: 17;
+    margin-top: 1;
 }
 
 DockerHealth,
 DockerPorts {
     width: 1fr;
-    height: 12;
-}
-
-DockerCPU,
-DockerMemory {
-    width: 1fr;
-    height: 7;
-}
-
-DockerNetwork,
-DockerIO {
-    width: 1fr;
-    height: 5;
-}
-
-DockerProcesses {
-    height: 5;
+    height: 10;
 }
 
 DockerLogs {
-    height: 8;
+    height: 20;
 }
 
 DockerActions {
     height: 3;
 }
-DockerCPUGraph {
-    border: round #F7C600;
-    padding: 1;
-    width: 1fr;
-    height: 8;
-}
+
 DockerContainerList,
 DockerHealth,
-DockerCPU,
-DockerMemory,
-DockerNetwork,
-DockerIO,
-DockerProcesses,
 DockerPorts,
 DockerLogs,
-DockerActions {
-    border: round #F7C600;
+DockerActions,
+DockerSystem {
+    border: solid #FF003C;
+    background: #080000;
     padding: 1;
     margin-right: 1;
     margin-bottom: 1;

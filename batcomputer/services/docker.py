@@ -12,7 +12,9 @@ def get_containers():
 
     containers = []
 
-    for container in client.containers.list():
+    for container in client.containers.list(
+        all=True
+    ):
 
         containers.append({
             "name": container.name,
@@ -32,9 +34,26 @@ def get_container(name):
     return client.containers.get(name)
 
 
+def start_container(name):
+
+    get_container(name).start()
+
+
+def stop_container(name):
+
+    get_container(name).stop()
+
+
+def restart_container(name):
+
+    get_container(name).restart()
+
+
 def get_container_health(name):
 
     container = get_container(name)
+
+    status = container.status
 
     started_at = (
         container.attrs["State"]["StartedAt"]
@@ -47,10 +66,16 @@ def get_container_health(name):
         )
     )
 
-    uptime = (
-        datetime.now(timezone.utc)
-        - started_at
-    )
+    if status == "running":
+
+        uptime = (
+            datetime.now(timezone.utc)
+            - started_at
+        )
+
+    else:
+
+        uptime = "OFFLINE"
 
     created_at = (
         container.attrs["Created"]
@@ -67,8 +92,13 @@ def get_container_health(name):
     )
 
     ip = "N/A"
+    network_name = "N/A"
 
     if networks:
+
+        network_name = next(
+            iter(networks.keys())
+        )
 
         first_network = next(
             iter(networks.values())
@@ -87,13 +117,15 @@ def get_container_health(name):
 
     return {
         "name": container.name,
-        "status": container.status,
+        "status": status,
         "id": container.short_id,
         "uptime": uptime,
         "created": created_at,
         "pid": pid,
         "ip": ip,
         "image": image,
+        "network": network_name,
+        "ports": container.attrs["NetworkSettings"]["Ports"],
     }
 
 

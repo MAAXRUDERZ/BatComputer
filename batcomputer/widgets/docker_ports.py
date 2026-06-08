@@ -2,7 +2,8 @@ from textual.widgets import Static
 
 from batcomputer.services import docker_state
 from batcomputer.services.docker import (
-    get_container_ports
+    get_container_ports,
+    get_container_health,
 )
 
 
@@ -32,13 +33,19 @@ class DockerPorts(Static):
                 selected
             )
 
+            health = get_container_health(
+                selected
+            )
+
             output = (
-                "[bold #F7C600]PORTS[/]\n\n"
+                "[bold #FF003C]ACCESS[/]\n\n"
             )
 
             if not ports:
 
-                output += "No ports exposed"
+                output += (
+                    "No ports exposed\n"
+                )
 
             else:
 
@@ -60,6 +67,19 @@ class DockerPorts(Static):
                         output += (
                             f"{port}\n"
                         )
+
+            image = (
+                health["image"]
+                .split("/")[-1]
+                [:20]
+            )
+
+            output += (
+                f"\nIMG:{image}\n"
+                f"NET:{health['network']}\n"
+                f"IP :{health['ip']}\n"
+                f"ID :{health['id']}"
+            )
 
             self.update(output)
 

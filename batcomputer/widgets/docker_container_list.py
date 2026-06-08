@@ -31,7 +31,7 @@ class DockerContainerList(Static):
     def refresh_list(self):
 
         output = (
-            "[bold #F7C600]CONTAINERS[/]\n\n"
+            "[bold #FF003C]CONTAINERS[/]\n\n"
         )
 
         for i, container in enumerate(
@@ -41,7 +41,7 @@ class DockerContainerList(Static):
             if i == docker_state.selected_index:
 
                 output += (
-                    f"► {container['name']}\n"
+                    f"[bold #FF003C]▶ {container['name']}[/]\n"
                 )
 
                 docker_state.selected_container = (

@@ -56,7 +56,7 @@ class DockerHealth(Static):
             )
 
             self.update(
-f"""[bold #F7C600]HEALTH[/]
+f"""[bold #FF003C]STATUS[/]
 
 [{color}]● {status.upper()}[/]
 CTR:{health["name"]}
@@ -70,7 +70,7 @@ IP :{health["ip"]}
         except Exception as e:
 
             self.update(
-f"""[bold #F7C600]HEALTH[/]
+f"""[bold #FF003C]STATUS[/]
 
 ERROR
 
