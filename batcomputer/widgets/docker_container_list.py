@@ -30,11 +30,11 @@ class DockerContainerList(Static):
 
     def refresh_list(self):
 
-        VISIBLE_ITEMS = 5
+        VISIBLE_ITEMS = 7
 
         start = max(
             0,
-            docker_state.selected_index - 2
+            docker_state.selected_index - 3
         )
 
         end = min(
@@ -49,25 +49,42 @@ class DockerContainerList(Static):
                 end - VISIBLE_ITEMS
             )
 
-        output = (
-            "[bold #FF003C]CONTAINERS[/]\n\n"
+        top_count = start
+
+        bottom_count = (
+            len(self.containers)
+            - end
         )
 
-        if start > 0:
+        title = (
+            "[bold #FF003C]CONTAINERS[/]"
+        )
 
-            output += (
-                f"[#888888]▲ {start} more[/]\n\n"
+        if top_count > 0:
+
+            title += (
+                f" [#AA0033]▲{top_count}[/]"
             )
+
+        if bottom_count > 0:
+
+            title += (
+                f" [#AA0033]▼{bottom_count}[/]"
+            )
+
+        output = title + "\n\n"
 
         for i, container in enumerate(
             self.containers[start:end],
             start=start
         ):
 
+            name = container["name"][:22]
+
             if i == docker_state.selected_index:
 
                 output += (
-                    f"[bold #FF003C]▶ {container['name']}[/]\n"
+                    f"[bold #FF003C]▶ {name}[/]\n"
                 )
 
                 docker_state.selected_container = (
@@ -77,23 +94,10 @@ class DockerContainerList(Static):
             else:
 
                 output += (
-                    f"  {container['name']}\n"
+                    f"  {name}\n"
                 )
 
-        remaining = (
-            len(self.containers)
-            - end
-        )
-
-        if remaining > 0:
-
-            output += (
-                f"\n[#888888]▼ {remaining} more[/]"
-            )
-
         self.update(output)
-
-
 
     def action_move_up(self):
 
