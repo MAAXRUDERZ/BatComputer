@@ -79,7 +79,11 @@ class DockerContainerList(Static):
             start=start
         ):
 
-            name = container["name"][:22]
+            name = container["name"]
+
+            if len(name) > 18:
+
+                name = name[:15] + "..."
 
             if i == docker_state.selected_index:
 
