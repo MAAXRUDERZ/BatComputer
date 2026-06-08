@@ -30,12 +30,38 @@ class DockerContainerList(Static):
 
     def refresh_list(self):
 
+        VISIBLE_ITEMS = 5
+
+        start = max(
+            0,
+            docker_state.selected_index - 2
+        )
+
+        end = min(
+            len(self.containers),
+            start + VISIBLE_ITEMS
+        )
+
+        if end - start < VISIBLE_ITEMS:
+
+            start = max(
+                0,
+                end - VISIBLE_ITEMS
+            )
+
         output = (
             "[bold #FF003C]CONTAINERS[/]\n\n"
         )
 
+        if start > 0:
+
+            output += (
+                f"[#888888]▲ {start} more[/]\n\n"
+            )
+
         for i, container in enumerate(
-            self.containers
+            self.containers[start:end],
+            start=start
         ):
 
             if i == docker_state.selected_index:
@@ -54,7 +80,20 @@ class DockerContainerList(Static):
                     f"  {container['name']}\n"
                 )
 
+        remaining = (
+            len(self.containers)
+            - end
+        )
+
+        if remaining > 0:
+
+            output += (
+                f"\n[#888888]▼ {remaining} more[/]"
+            )
+
         self.update(output)
+
+
 
     def action_move_up(self):
 
