@@ -74,6 +74,18 @@ DockerActions {
     height: 3;
 }
 
+.docker-banner {
+    width: auto;
+}
+
+.docker-hotkeys {
+    width: 1fr;
+    padding-left: 2;
+    padding-top: 1;
+    content-align: left top;
+    color: #909090;
+}
+
 DockerContainerList,
 DockerHealth,
 DockerPorts,
@@ -85,4 +97,20 @@ DockerSystem {
     padding: 1;
     margin-right: 1;
     margin-bottom: 1;
+}
+
+TaskList {
+    width: 1fr;
+    height: 37;
+    border: solid #FF003C;
+    background: #080000;
+    padding: 1;
+    margin-right: 1;
+}
+
+ProcessDetails {
+    width: 1fr;
+    border: solid #FF003C;
+    background: #080000;
+    padding: 1;
 }

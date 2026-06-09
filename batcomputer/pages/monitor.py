@@ -1,11 +1,16 @@
 from textual.widget import Widget
 from textual.containers import Horizontal
 
-from batcomputer.widgets.task_list import TaskList
-from batcomputer.widgets.process_details import ProcessDetails
+from batcomputer.widgets.task_list import (
+    TaskList
+)
+
+from batcomputer.widgets.process_details import (
+    ProcessDetails
+)
 
 
-class ArchivePage(Widget):
+class MonitorPage(Widget):
 
     def compose(self):
 

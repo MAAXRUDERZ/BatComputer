@@ -84,15 +84,28 @@ class DockerPage(Widget):
 
     def compose(self):
 
-        yield Static(
-"""[bold #90A4AE]
-╔══════════════════════════════════════════════╗
- ║          BATCOMPUTER DOCKER CENTER         ║
- ║        CONTAINER OBSERVABILITY HUB         ║
-╚══════════════════════════════════════════════╝
-[/]
-"""
-        )
+        with Horizontal():
+
+            yield Static(
+    """[bold #90A4AE]
+    ╔══════════════════════════════════════════════╗
+     ║         BATCOMPUTER DOCKER CENTER          ║
+     ║       CONTAINER OBSERVABILITY HUB          ║
+    ╚══════════════════════════════════════════════╝
+    [/]
+    """,
+                classes="docker-banner"
+            )
+
+            yield Static(
+    """[#FF003C]
+ \\[S] START  | \\[T] STOP  | \\[R] RESTART
+
+ [⇧S] ALL   | [⇧T] ALL  | [⇧R] ALL
+    [/]
+    """,
+                classes="docker-hotkeys"
+            )
 
         with Horizontal():
 
