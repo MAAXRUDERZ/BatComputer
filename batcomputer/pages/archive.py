@@ -1,16 +1,41 @@
 from textual.widget import Widget
-from textual.containers import Horizontal
+from textual.widgets import Static
+from textual.containers import (
+    Horizontal,
+    Vertical,
+)
 
-from batcomputer.widgets.task_list import TaskList
-from batcomputer.widgets.process_details import ProcessDetails
+from batcomputer.widgets.task_list import (
+    TaskList
+)
+
+from batcomputer.widgets.process_details import (
+    ProcessDetails
+)
 
 
 class ArchivePage(Widget):
 
     def compose(self):
 
-        with Horizontal():
+        with Vertical():
 
-            yield TaskList()
+            with Horizontal():
 
-            yield ProcessDetails()
+                yield TaskList()
+
+                yield ProcessDetails()
+
+            yield Static(
+                "[#888888]"
+                "\\[C] CPU  "
+                "\\[M] MEM  "
+                "\\[P] PID  "
+                "\\[N] NAME  "
+                "\\[K] KILL  "
+                "\\[/] SEARCH  "
+                "\\[Y] ACCEPT  "
+                "\\[ESC] CLEAR"
+                "[/]",
+                classes="monitor-footer"
+            )

@@ -114,3 +114,16 @@ ProcessDetails {
     background: #080000;
     padding: 1;
 }
+
+.monitor-footer {
+
+    height: 1;
+
+    dock: bottom;
+
+    text-align: center;
+
+    color: #888888;
+
+    padding: 0 1;
+}
