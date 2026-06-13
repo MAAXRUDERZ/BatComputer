@@ -7,6 +7,9 @@ from batcomputer.services.processes import (
     get_processes,
     kill_process,
 )
+from batcomputer.widgets.search_popup import (
+    SearchPopup
+)
 from batcomputer.widgets.kill_popup import (
     KillPopup
 )
