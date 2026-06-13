@@ -1,11 +1,15 @@
 from textual.widgets import Static
 from textual.binding import Binding
+import time
 
 from batcomputer.services import process_state
 from batcomputer.services.processes import (
-    get_processes
+    get_processes,
+    kill_process,
 )
-
+from batcomputer.widgets.kill_popup import (
+    KillPopup
+)
 
 class TaskList(Static):
 
@@ -19,9 +23,12 @@ class TaskList(Static):
         Binding("m", "sort_memory"),
         Binding("p", "sort_pid"),
         Binding("n", "sort_name"),
+        Binding("k", "kill_process"),
     ]
 
     def on_mount(self):
+    
+        self.last_sort = 0
 
         self.set_interval(
             1,
@@ -31,6 +38,22 @@ class TaskList(Static):
         self.focus()
 
     def refresh_list(self):
+
+        current_time = time.time()
+
+        if (
+            current_time
+            - self.last_sort
+            > 5
+        ):
+
+            process_state.freeze_sort = False
+
+            self.last_sort = current_time
+
+        else:
+
+            process_state.freeze_sort = True
 
         processes = get_processes()
 
@@ -54,6 +77,10 @@ class TaskList(Static):
                 == process_state.selected_pid
             ),
             0
+        )
+        
+        process_state.selected_index = (
+            selected_idx
         )
 
         VISIBLE_ITEMS = 30
@@ -82,9 +109,15 @@ class TaskList(Static):
             - end
         )
 
+        direction = (
+            "▼"
+            if process_state.sort_reverse
+            else "▲"
+        )
+
         title = (
             f"[bold #FF003C]TASKS[/] "
-            f"[#888888]({process_state.sort_mode.upper()})[/]"
+            f"[#888888]({process_state.sort_mode.upper()} {direction})[/]"
         )
 
         if top_count > 0:
@@ -155,21 +188,16 @@ class TaskList(Static):
 
         processes = get_processes()
 
-        current_idx = next(
-            (
-                i
-                for i, p in enumerate(processes)
-                if p["pid"]
-                == process_state.selected_pid
-            ),
-            0
-        )
+        if (
+            process_state.selected_index
+            > 0
+        ):
 
-        if current_idx > 0:
+            process_state.selected_index -= 1
 
             process_state.selected_pid = (
                 processes[
-                    current_idx - 1
+                    process_state.selected_index
                 ]["pid"]
             )
 
@@ -179,24 +207,16 @@ class TaskList(Static):
 
         processes = get_processes()
 
-        current_idx = next(
-            (
-                i
-                for i, p in enumerate(processes)
-                if p["pid"]
-                == process_state.selected_pid
-            ),
-            0
-        )
-
         if (
-            current_idx
+            process_state.selected_index
             < len(processes) - 1
         ):
 
+            process_state.selected_index += 1
+
             process_state.selected_pid = (
                 processes[
-                    current_idx + 1
+                    process_state.selected_index
                 ]["pid"]
             )
 
@@ -204,24 +224,167 @@ class TaskList(Static):
 
     def action_sort_cpu(self):
 
-        process_state.sort_mode = "cpu"
+        if (
+            process_state.sort_mode
+            == "cpu"
+        ):
+
+            process_state.sort_reverse = (
+                not process_state.sort_reverse
+            )
+
+        else:
+
+            process_state.sort_mode = "cpu"
+
+            process_state.sort_reverse = True
+
+        process_state.freeze_sort = False
+
+        processes = get_processes()
+
+        if processes:
+
+            process_state.selected_index = 0
+
+            process_state.selected_pid = (
+                processes[0]["pid"]
+            )
+
+        self.last_sort = 0
 
         self.refresh_list()
+
+
 
     def action_sort_memory(self):
 
-        process_state.sort_mode = "memory"
+        if (
+            process_state.sort_mode
+            == "memory"
+        ):
+
+            process_state.sort_reverse = (
+                not process_state.sort_reverse
+            )
+
+        else:
+
+            process_state.sort_mode = "memory"
+
+            process_state.sort_reverse = True
+
+        process_state.freeze_sort = False
+
+        processes = get_processes()
+
+        if processes:
+
+            process_state.selected_index = 0
+
+            process_state.selected_pid = (
+                processes[0]["pid"]
+            )
+
+        self.last_sort = 0
 
         self.refresh_list()
+
+
 
     def action_sort_pid(self):
 
-        process_state.sort_mode = "pid"
+        if (
+            process_state.sort_mode
+            == "pid"
+        ):
+
+            process_state.sort_reverse = (
+                not process_state.sort_reverse
+            )
+
+        else:
+
+            process_state.sort_mode = "pid"
+
+            process_state.sort_reverse = False
+
+        process_state.freeze_sort = False
+
+        processes = get_processes()
+
+        if processes:
+
+            process_state.selected_index = 0
+
+            process_state.selected_pid = (
+                processes[0]["pid"]
+            )
+
+        self.last_sort = 0
 
         self.refresh_list()
+        
 
     def action_sort_name(self):
 
-        process_state.sort_mode = "name"
+        if (
+            process_state.sort_mode
+            == "name"
+        ):
+
+            process_state.sort_reverse = (
+                not process_state.sort_reverse
+            )
+
+        else:
+
+            process_state.sort_mode = "name"
+
+            process_state.sort_reverse = False
+
+        process_state.freeze_sort = False
+
+        processes = get_processes()
+
+        if processes:
+
+            process_state.selected_index = 0
+
+            process_state.selected_pid = (
+                processes[0]["pid"]
+            )
+
+        self.last_sort = 0
 
         self.refresh_list()
+    
+    def action_kill_process(self):
+
+        pid = (
+            process_state.selected_pid
+        )
+
+        if not pid:
+            return
+
+        processes = get_processes()
+
+        proc = next(
+            (
+                p
+                for p in processes
+                if p["pid"] == pid
+            ),
+            None
+        )
+
+        if not proc:
+            return
+
+        self.app.push_screen(
+            KillPopup(
+                pid,
+                proc["name"]
+            )
+        )

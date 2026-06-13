@@ -22,7 +22,6 @@ class ProcessDetails(Static):
         )
 
         if not pid:
-
             return
 
         try:
@@ -39,30 +38,43 @@ class ProcessDetails(Static):
                 / 1024
             )
 
+            if memory_mb > 1024:
+
+                memory_text = (
+                    f"{memory_mb / 1024:.2f} GB"
+                )
+
+            else:
+
+                memory_text = (
+                    f"{memory_mb:.1f} MB"
+                )
+
             self.update(
 f"""[bold #FF003C]PROCESS DETAILS[/]
 
-PID:
-{details["pid"]}
+PID         : {details["pid"]}
+PPID        : {details.get("ppid", "N/A")}
+USER        : {details["user"]}
+STATUS      : {details["status"]}
 
-USER:
-{details["user"]}
+CPU         : {details["cpu"]:.1f}%
+MEMORY      : {memory_text}
+THREADS     : {details["threads"]}
 
-STATUS:
-{details["status"]}
+OPEN FILES  : {details.get("open_files", 0)}
 
-CPU:
-{details["cpu"]:.1f}%
+STARTED
+{details.get("started", "N/A")}
 
-MEMORY:
-{memory_mb:.1f} MB
+EXECUTABLE
+{details.get("exe", "N/A")[:300]}
 
-THREADS:
-{details["threads"]}
+WORKING DIR
+{details.get("cwd", "N/A")[:300]}
 
-CMDLINE:
-
-{details["cmdline"][:200]}
+CMDLINE
+{details["cmdline"][:500]}
 """
             )
 
@@ -71,7 +83,7 @@ CMDLINE:
             self.update(
 f"""[bold #FF003C]PROCESS DETAILS[/]
 
-Process exited
+PROCESS EXITED
 
 {repr(e)}
 """
