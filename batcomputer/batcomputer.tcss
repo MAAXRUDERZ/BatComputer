@@ -102,15 +102,15 @@ DockerSystem {
 TaskList {
     width: 1fr;
     height: 37;
-    border: solid #FF003C;
-    background: #080000;
+    border: solid #7B1FA2;
+    background: #050005;
     padding: 1;
     margin-right: 1;
 }
 
 ProcessDetails {
     width: 1fr;
-    border: solid #FF003C;
+    border: solid #FF00AA;
     background: #080000;
     padding: 1;
 }

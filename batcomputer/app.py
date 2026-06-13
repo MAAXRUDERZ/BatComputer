@@ -36,9 +36,9 @@ class BatComputer(App):
             "name": "WayneTech",
         },
         "Archive": {
-            "primary": "#6A1B9A",
-            "accent": "#FF1744",
-            "name": "Batman Who Laughs",
+            "primary": "#7B1FA2",
+            "accent": "#39FF14",
+            "name": "Joker",
         },
         "Settings": {
             "primary": "#78909C",

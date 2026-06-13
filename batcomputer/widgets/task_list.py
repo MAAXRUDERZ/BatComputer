@@ -122,7 +122,7 @@ class TaskList(Static):
         )
 
         title = (
-            f"[bold #FF003C]TASKS[/] "
+            f"[bold #39FF14]TASKS[/] "
             f"[#888888]({process_state.sort_mode.upper()} {direction})[/]"
         )
 
@@ -179,7 +179,7 @@ class TaskList(Static):
             if selected:
 
                 output += (
-                    f"[bold #FF003C]▶ "
+                    f"[bold #39FF14]▶ "
                     f"{name[:18]:18} "
                     f"{cpu:>4.0f}% "
                     f"{mem:>4.1f}% "

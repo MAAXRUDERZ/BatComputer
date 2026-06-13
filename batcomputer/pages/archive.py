@@ -27,7 +27,7 @@ class ArchivePage(Widget):
                 yield ProcessDetails()
 
             yield Static(
-                "[#888888]"
+                "[#FFD600]"
                 "\\[C] CPU  "
                 "\\[M] MEM  "
                 "\\[P] PID  "

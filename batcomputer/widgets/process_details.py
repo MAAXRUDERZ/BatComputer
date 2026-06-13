@@ -51,7 +51,7 @@ class ProcessDetails(Static):
                 )
 
             self.update(
-f"""[bold #FF003C]PROCESS DETAILS[/]
+f"""[bold #7B1FA2]PROCESS DETAILS[/]
 
 PID         : {details["pid"]}
 PPID        : {details.get("ppid", "N/A")}
@@ -81,7 +81,7 @@ CMDLINE
         except Exception as e:
 
             self.update(
-f"""[bold #FF003C]PROCESS DETAILS[/]
+f"""[bold #7B1FA2]PROCESS DETAILS[/]
 
 PROCESS EXITED
 
