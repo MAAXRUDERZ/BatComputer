@@ -24,6 +24,9 @@ class TaskList(Static):
         Binding("p", "sort_pid"),
         Binding("n", "sort_name"),
         Binding("k", "kill_process"),
+        
+        Binding("/", "search"),
+        Binding("escape", "clear_search"),
     ]
 
     def on_mount(self):
@@ -120,6 +123,14 @@ class TaskList(Static):
             f"[#888888]({process_state.sort_mode.upper()} {direction})[/]"
         )
 
+        if process_state.search_query:
+
+            title += (
+                f" [#00E676]"
+                f"SEARCH:"
+                f"{process_state.search_query}"
+                f"[/]"
+            )
         if top_count > 0:
 
             title += (
@@ -358,7 +369,28 @@ class TaskList(Static):
         self.last_sort = 0
 
         self.refresh_list()
+        
     
+    def action_search(self):
+
+        self.app.push_screen(
+            SearchPopup()
+        )
+    
+    
+    def action_clear_search(self):
+
+        process_state.search_query = ""
+
+        process_state.selected_pid = None
+
+        self.refresh_list()
+
+        self.notify(
+            "Search cleared"
+        )
+    
+        
     def action_kill_process(self):
 
         pid = (
