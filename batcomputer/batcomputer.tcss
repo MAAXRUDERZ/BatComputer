@@ -127,3 +127,51 @@ ProcessDetails {
 
     padding: 0 1;
 }
+
+.network-title {
+
+    height: 1;
+
+    color: #39FF14;
+
+    text-style: bold;
+
+    margin-bottom: 0;
+}
+
+.network-panel {
+
+    border: solid #39FF14;
+
+    background: #001100;
+
+    width: 1fr;
+
+    height: 18;
+
+    padding: 1;
+
+    margin-right: 1;
+}
+
+.network-wide-panel {
+
+    border: solid #39FF14;
+
+    background: #001100;
+
+    height: 18;
+
+    padding: 1;
+
+    margin-top: 1;
+}
+
+.network-footer {
+
+    color: #FFD700;
+
+    height: 3;
+
+    content-align: center middle;
+}

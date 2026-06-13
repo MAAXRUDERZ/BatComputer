@@ -33,7 +33,7 @@ class KillPopup(ModalScreen):
 
         yield Static(
 f"""
-[bold #FF003C]END TASK[/]
+[bold #7B1FA2]END TASK[/]
 
 Name:
 {self.process_name}
