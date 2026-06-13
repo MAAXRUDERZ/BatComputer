@@ -14,6 +14,10 @@ from batcomputer.widgets.network_connections import (
     NetworkConnections
 )
 
+from batcomputer.widgets.network_stats import (
+    NetworkStats
+)
+
 
 class NetworkPage(Widget):
 
@@ -36,8 +40,7 @@ class NetworkPage(Widget):
                     classes="network-panel"
                 )
 
-            yield Static(
-                "[bold #39FF14]THE GRID[/]",
+            yield NetworkStats(
                 classes="network-wide-panel"
             )
 
