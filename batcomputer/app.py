@@ -206,6 +206,12 @@ class BatComputer(App):
         )
         self.update_footer()
         self.update_logo()
-        
-if __name__ == "__main__":
+     
+def main():
+
     BatComputer().run()
+
+
+if __name__ == "__main__":
+
+    main()

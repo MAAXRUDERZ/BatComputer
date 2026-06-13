@@ -1,0 +1,3 @@
+[console_scripts]
+batcom = batcomputer.app:main
+batcomputer = batcomputer.app:main
