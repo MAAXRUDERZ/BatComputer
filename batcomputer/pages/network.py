@@ -6,6 +6,14 @@ from textual.containers import (
 
 from textual.widgets import Static
 
+from batcomputer.widgets.network_interfaces import (
+    NetworkInterfaces
+)
+
+from batcomputer.widgets.network_connections import (
+    NetworkConnections
+)
+
 
 class NetworkPage(Widget):
 
@@ -20,13 +28,11 @@ class NetworkPage(Widget):
 
             with Horizontal():
 
-                yield Static(
-                    "[bold #39FF14]CLUES[/]",
+                yield NetworkInterfaces(
                     classes="network-panel"
                 )
 
-                yield Static(
-                    "[bold #39FF14]ACTIVE CONNECTIONS[/]",
+                yield NetworkConnections(
                     classes="network-panel"
                 )
 
